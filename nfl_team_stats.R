@@ -178,6 +178,12 @@ defense$time.on.field <- ms(defense$time.on.field)
 #checks structure
 str(defense)
 
+#
+#
+#
+
+#merges offense and defense data
+
 
 
 
