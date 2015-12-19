@@ -86,8 +86,10 @@ offense$pen.yds <- as.numeric(gsub(',', '', offense$pen.yds))
 #formats time of possession using lubridate package 
 offense$timepos.game <- ms(offense$timepos.game)
 
+offense$rank <- NULL
+
 #checks structure
-str(offenses)
+str(offense)
 
 #
 #
@@ -139,7 +141,6 @@ defense <- rbind(defense.2015, defense.2014, defense.2013, defense.2012, defense
                  defense.2008, defense.2007, defense.2006, defense.2005)
 
 names(defense) <- tolower(names(defense))
-names(defense)[1] <- "def.rank"
 names(defense)[3] <- "def.games"
 names(defense)[4] <- "pts.game.allowed"
 names(defense)[5] <- "tot.pts.allowed"
@@ -159,14 +160,8 @@ names(defense)[18] <- "time.on.field"
 names(defense)[19] <- "def.fum"
 names(defense)[20] <- "def.fum.lost"
 
-defense$def.rank <- as.factor(defense$def.rank)
 defense$team <- as.factor(defense$team)
 defense$year <- as.factor(defense$year)
-
-#adds PHI flag, useful for colors when plotting
-defense$flag <- "Other"
-defense$flag[defense$team == "Philadelphia Eagles"] <- "PHI"
-defense$flag <- as.factor(defense$flag)
 
 #removes comma separator and formats as.numeric
 defense$def.scrm.plys <- as.numeric(gsub(',', '', defense$def.scrm.plys))
@@ -174,6 +169,9 @@ defense$def.pen.yds <- as.numeric(gsub(',', '', defense$def.pen.yds))
 
 #formats time of possession using lubridate package 
 defense$time.on.field <- ms(defense$time.on.field)
+
+defense$rk <- NULL
+
 
 #checks structure
 str(defense)
@@ -184,7 +182,8 @@ str(defense)
 
 #merges offense and defense data
 
-
+stats <- left_join(offense, defense, by = c("team", "year"))
+View(stats)
 
 
 
