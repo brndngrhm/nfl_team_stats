@@ -2,7 +2,7 @@
 title: 'NFL Stats: 2005-2015'
 author: ''
 date: "December 19, 2015"
-output: word_document
+output: html_document
 ---
 
 ###Summary
