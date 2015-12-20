@@ -1,0 +1,9 @@
+---
+title: 'NFL Stats: 2005-2015'
+author: ""
+date: "December 19, 2015"
+output: html_document
+---
+
+###Summary
+This is an attempt to learn RMarkdown and incproprate historical and current NFL data from 2005 - 2015 from [NFL.com](http://www.nfl.com/stats/team). The data consists of `r ncol(stats)` offensive and defensive variables by season for each of the 32 teams in the NFL, which comes to `r nrow(stats)` observations of each variable. This analyss will (hopefilly) consist of plots and tables and hopefully some intereting trends I discover as I work through this stuff. I'm really just interested in seeing how this doc will change and update as the 2015 regular season progresses.

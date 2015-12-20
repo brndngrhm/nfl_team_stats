@@ -6,6 +6,7 @@ library(ggplot2)
 library(ggthemes)
 library(rvest)
 library(lubridate)
+library(knitr)
 
 #
 #
@@ -86,6 +87,7 @@ offense$pen.yds <- as.numeric(gsub(',', '', offense$pen.yds))
 #formats time of possession using lubridate package 
 offense$timepos.game <- ms(offense$timepos.game)
 
+#removes rank vector
 offense$rank <- NULL
 
 #checks structure
@@ -170,6 +172,7 @@ defense$def.pen.yds <- as.numeric(gsub(',', '', defense$def.pen.yds))
 #formats time of possession using lubridate package 
 defense$time.on.field <- ms(defense$time.on.field)
 
+#removes rank vector - dont need it
 defense$rk <- NULL
 
 
@@ -182,6 +185,7 @@ str(defense)
 
 #merges offense and defense data
 
+@knitr: stats
 stats <- left_join(offense, defense, by = c("team", "year"))
 View(stats)
 
