@@ -14,3 +14,8 @@ The data consists of `r ncol(stats)` offensive and defensive variables by season
 ```{r, echo = FALSE, results = "asis", align = "c"}
 knitr::kable(team.pts, digits=2, width=.5, format="html", table.attr = "width=\"400\"")
 ```
+
+
+source(nfl_team_stats.R)
+library('rmarkdown')
+render('NFL_Stats.Rmd')
