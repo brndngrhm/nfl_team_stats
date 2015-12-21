@@ -206,11 +206,10 @@ team.pts.2015 <- stats %>% filter(year == "2015") %>% group_by(team) %>%
 
 #plots
 
-(pts.vs.pen <- ggplot(subset(stats, year == "2015"), aes(x=pen.yds, y=pts.game)) + 
-  geom_point(size=3, alpha=.6) + labs(x="\nPenalty Yards", y="Points per Game\n", 
-                                      title = "Points per Game vs. Penalty Yards\n(2015)\n"))
+(pts.vs.pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=pen.yds/games, y=pts.game)) + 
+  geom_point(size=3, alpha=.6) + labs(x="\nPenalty Yards per Game", y="Points per Game\n", 
+                                      title = "Points per Game vs. Penalty Yards per Game\n(2015)\n"))
 
-(thirdconv.vs.pen <- ggplot(subset(stats, year == "2015"), aes(x=pen.yds, y=third.rate)) + 
-  geom_point(size=3, alpha=.6) + labs(x="\nPenalty Yards", y="3rd Down COnversion Rate\n", 
-                                      title = "Points per Game vs. Penalty Yards\n(2015)\n"))
-
+(pts.vs.pen <- ggplot(subset(stats, year == "2015"), aes(x=pen/games, y=pts.game)) + 
+  geom_point(size=3, alpha=.6) + labs(x="\nPenalties per Game", y="Points per Game\n", 
+                                      title = "Points per Game vs. Penalties per Game\n(2015)\n"))
