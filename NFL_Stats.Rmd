@@ -17,12 +17,19 @@ knitr::kable(head(team.pts, n=10), digits=2)
 ```
 
 
-The plot below indicates the amount of penalty yards seems to have no real effect on the amount of points per game scored. The Pearson correlation for these two variables is basically 0 (r=`r round(cor(stats$pen.yds, stats$pts.game), digits = 4)`), which confirms the lack of relationship shown in the plot.
+The plot below indicates the amount of penalty yards seems to have no real effect on the amount of points per game scored. The Pearson correlation for these two variables is basically 0 (r=`r round(cor((stats$pen.yds/stats$games), stats$pts.game), digits = 4)`), which confirms the lack of relationship shown in the plot. Thought this was lind of interesting, maybe coahces/fans should't be too upset at enalties that cost a lot of yards.
+
+```{r, echo = FALSE, fig.width=8, fig.height=7}
+
+print(pts.vs.pen.yds)
+
+```
+
+A plot of ponts per game against the number of pentalties per game shows a similar (non) relationship.
 
 ```{r, echo = FALSE, fig.width=8, fig.height=7}
 
 print(pts.vs.pen)
 
 ```
-
 
