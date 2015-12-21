@@ -1,6 +1,6 @@
 #NFL team stats
 
-# Section 0: Libraries----
+# Section 0: Libraries ----
 library(dplyr)
 library(ggplot2)
 library(ggthemes)
@@ -13,7 +13,7 @@ library(rmarkdown)
 #
 #
 
-# Section 1: OFFENSE----
+# Section 1: OFFENSE ----
 
 #scrape offense data using rvest package
 url.offense.2015 <- "http://www.nfl.com/stats/categorystats?tabSeq=2&offensiveStatisticCategory=GAME_STATS&conference=ALL&role=TM&season=2015&seasonType=REG&d-447263-s=TOTAL_YARDS_GAME_AVG&d-447263-o=2&d-447263-n=1"
@@ -98,7 +98,7 @@ str(offense)
 #
 #
 
-# Section 2: DEFENSE----
+# Section 2: DEFENSE ----
 
 #scrape offense data using rvest package
 url.defense.2015 <- "http://www.nfl.com/stats/categorystats?tabSeq=2&defensiveStatisticCategory=GAME_STATS&conference=ALL&role=OPP&season=2015&seasonType=REG&d-447263-s=TOTAL_YARDS_GAME_AVG&d-447263-o=1&d-447263-n=1"
@@ -192,7 +192,7 @@ View(stats)
 #
 #
 
-# Section 3: Stuff for R Markdpwn doc----
+# Section 3: Stuff for R Markdpwn doc ----
 
 #table of avg points per game by team
 team.pts <- stats %>% group_by(team) %>% summarise(mean.points = mean(pts.game)) %>% ungroup() %>% arrange(desc(mean.points))
