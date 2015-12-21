@@ -192,11 +192,21 @@ View(stats)
 #
 #
 
-# Section 3: Stuff for R Markdpwn doc ----
+# Section 3: Stuff for R Markdown doc ----
 
-#table of avg points per game by team
-team.pts <- stats %>% group_by(team) %>% summarise(mean.points = mean(pts.game)) %>% ungroup() %>% arrange(desc(mean.points))
+#table of avg points per game by team for 2005-2015
+team.pts <- stats %>% group_by(team) %>% summarise(mean.points = mean(pts.game)) %>% ungroup() %>% 
+  arrange(desc(mean.points))
 names(team.pts)[1] <- "Team"
-names(team.pts)[2] <- "Avg. Points per Game (2005-2015)"
+names(team.pts)[2] <- "Avg. Points per Game: (2005-2015)"
 
+#table of avg points per game by team for 2015
+team.pts.2015 <- stats %>% filter(year == "2015") %>% group_by(team) %>% 
+  summarise(mean.points = mean(pts.game)) %>% ungroup() %>% arrange(desc(mean.points))
+
+#plots
+
+(pts.vs.pen <- ggplot(subset(stats, year == "2015"), aes(x=pen.yds, y=pts.game)) + 
+  geom_point(size=3, alpha=.6) + labs(x="\nPenalty Yards", y="Points per Game\n", 
+                                      title = "Points per Game vs. Penalty Yards\n(2015)\n"))
 
