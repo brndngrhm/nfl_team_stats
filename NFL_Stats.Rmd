@@ -9,9 +9,9 @@ output: html_document
 This is an attempt to learn R Markdown and incorporate historical and current NFL data from 2005 - 2015 from [NFL.com](http://www.nfl.com/stats/team). This analysis will (hopefully) consist of plots and tables and hopefully some interesting trends I discover as I work through this stuff. I'm really just interested in seeing if I can get this to update as the 2015 regular season progresses.
 
 
-The data consists of `r ncol(stats)` offensive and defensive variables by season for each of the 32 teams in the NFL, which comes to `r nrow(stats)` observations of each variable. A table of teams organized by average points over the past 10 seasons is below:
+The data consists of `r ncol(stats)` offensive and defensive variables by season for each of the 32 teams in the NFL, which comes to `r nrow(stats)` observations of each variable. A table of the top ten teams organized by average points over the past 10 seasons is below:
 
 ```{r, echo = FALSE, results = "asis", align = "c"}
-knitr::kable(team.pts, digits=2, width=.5, format="html", table.attr = "width=\"300\"")
+knitr::kable(head(team.pts, n=10), digits=2, width=.5, format="html", table.attr = "width=\"400\"")
 ```
 
