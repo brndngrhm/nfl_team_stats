@@ -12,10 +12,6 @@ This is an attempt to learn R Markdown and incorporate historical and current NF
 The data consists of `r ncol(stats)` offensive and defensive variables by season for each of the 32 teams in the NFL, which comes to `r nrow(stats)` observations of each variable. A table of teams organized by average points over the past 10 seasons is below:
 
 ```{r, echo = FALSE, results = "asis", align = "c"}
-knitr::kable(team.pts, digits=2, width=.5, format="html", table.attr = "width=\"400\"")
+knitr::kable(team.pts, digits=2, width=.5, format="html", table.attr = "width=\"300\"")
 ```
 
-
-source(nfl_team_stats.R)
-library('rmarkdown')
-render('NFL_Stats.Rmd')
