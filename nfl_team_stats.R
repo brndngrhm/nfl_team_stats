@@ -213,3 +213,15 @@ team.pts.2015 <- stats %>% filter(year == "2015") %>% group_by(team) %>%
 (pts.vs.pen <- ggplot(subset(stats, year == "2015"), aes(x=pen/games, y=pts.game)) + 
   geom_point(size=3, alpha=.6) + labs(x="\nPenalties per Game", y="Points per Game\n", 
                                       title = "Points per Game vs. Penalties per Game\n(2015)\n"))
+
+
+(def.pts.2015 <- ggplot(subset(stats,year == "2015"), aes(x=reorder(team,-pts.game.allowed), y=pts.game.allowed, fill=flag)) +
+  geom_bar(stat="identity", alpha=.6) + labs(x="", y="Points per Game Allowed\n", title = "Points Allowed: 2005-2015\n") + 
+  guides(fill=FALSE) + scale_fill_manual(values = c("gray37", "darkgreen")) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+(pts.vs.defpen <- ggplot(subset(stats, year == "2015"), aes(x=def.pen/games, y=pts.game.allowed)) + 
+  geom_point(size=3, alpha=.6) + labs(x="\n Defensive Penalties per Game", y="Points per GameAllowed\n", title = "Points per Game Allowed vs. Defensive Penalties per Game\n(2015)\n"))
+
+(pts.vs.defpenyds <- ggplot(subset(stats, year == "2015"), aes(x=def.pen.yds/games, y=pts.game.allowed)) + 
+  geom_point(size=3, alpha=.6) + labs(x="\n Defensive Penalties per Game", y="Points per GameAllowed\n", title = "Points per Game Allowed vs. Defensive Penalties per Game\n(2015)\n"))
