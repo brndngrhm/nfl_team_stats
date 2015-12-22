@@ -5,11 +5,12 @@ date: "December 19, 2015"
 output: html_document
 ---
 
-###Summary + Description of Data
-This is an attempt to learn R Markdown and incorporate historical and current NFL data from 2005-2015 from [NFL.com](http://www.nfl.com/stats/team). This analysis will (hopefully) consist of plots and tables and any interesting trends I discover as I work through this stuff. I'm really just interested in seeing if I can get this to update as the 2015 regular season progresses.
+###Summary + Description of Data 
+This is an attempt to learn R Markdown and incorporate historical and current NFL data from 2005-2015 from [NFL.com](http://www.nfl.com/stats/team). This analysis will (hopefully) consist of plots and tables and any interesting trends I discover as I work through this stuff. I'm really just interested in seeing if I can get this to update as the 2015 regular season progresses.The data consists of `r ncol(stats)` offensive and defensive variables by season for each of the 32 teams in the NFL, which comes to `r nrow(stats)` observations of each variable. 
 
 
-The data consists of `r ncol(stats)` offensive and defensive variables by season for each of the 32 teams in the NFL, which comes to `r nrow(stats)` observations of each variable. In 2015, the `r team.pts.2015[1,1]` have the highest average points per game at `r team.pts.2015[1,2]` points, followed by the `r team.pts.2015[2,1]` and `r team.pts.2015[3,1]` scoring on average `r team.pts.2015[2,2]` and `r team.pts.2015[3,2]` points, respectively. Looking back over the past 10 seasons, the `r team.pts[1,1]` on average scored the most points per game.
+###Offense
+In 2015, the `r team.pts.2015[1,1]` have the highest average points per game at `r team.pts.2015[1,2]` points, followed by the `r team.pts.2015[2,1]` and `r team.pts.2015[3,1]` scoring on average `r team.pts.2015[2,2]` and `r team.pts.2015[3,2]` points, respectively. Looking back over the past 10 seasons, the `r team.pts[1,1]` on average scored the most points per game.
 
 ```{r, echo = FALSE, results = "asis", align = "c"}
 knitr::kable(head(team.pts, n=10), digits=2)
@@ -17,7 +18,7 @@ knitr::kable(head(team.pts, n=10), digits=2)
 ```
 
 
-The plot below indicates the amount of penalty yards seems to have no real effect on the amount of points per game scored. The Pearson correlation for these two variables is basically 0 (r=`r round(cor((stats$pen.yds/stats$games), stats$pts.game), digits = 4)`), which confirms the lack of relationship shown in the plot. Thought this was lind of interesting, maybe coahces/fans should't be too upset at enalties that cost a lot of yards.
+The plot below indicates the amount of penalty yards seems to have no real effect on the amount of points per game scored. The Pearson correlation for these two variables is basically 0 (r=`r round(cor((stats$pen.yds/stats$games), stats$pts.game), digits = 4)`), which confirms the lack of relationship shown in the plot. Thought this was kind of interesting, maybe coaches/fans shouldn't be too upset at penalties that cost a lot of yards.
 
 ```{r, echo = FALSE, fig.width=8, fig.height=7}
 
@@ -25,11 +26,34 @@ print(pts.vs.pen.yds)
 
 ```
 
-A plot of ponts per game against the number of pentalties per game shows a similar (non) relationship.
+A plot of points per game against the number of penalties per game shows a similar (non) relationship.
 
 ```{r, echo = FALSE, fig.width=8, fig.height=7}
 
 print(pts.vs.pen)
 
 ```
+
+
+
+###Defense
+
+```{r, echo = FALSE, warning = FALSE}
+library(dplyr) 
+
+bad.def <- stats %>% filter(year == "2015") %>% group_by(team) %>% summarise(pts.allowed = sum(pts.game.allowed)) %>% ungroup() %>% arrange(desc(pts.allowed)) %>% head(team, n=5)
+
+
+```
+
+Looking at the defensive side of things, the `r bad.def[1,1]` are the worst defense in 2015 in terms of most point allowed per game. The `r bad.def[2,1]`, `r bad.def[3,1]`. and `r bad.def[4,1]` follow the `r bad.def[1,1]` in terms of average points allowed per game this season, and the entire league can be seen in the plot below.
+
+```{r, echo = FALSE, fig.width=8, fig.height=7}
+
+print(def.pts.2015)
+
+```
+
+
+
 
