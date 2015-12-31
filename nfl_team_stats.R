@@ -1,6 +1,6 @@
 #NFL team stats
 
-# Section 0: Libraries ----
+# Section 0: load packages ----
 library(dplyr)
 library(ggplot2)
 library(ggthemes)
@@ -8,6 +8,7 @@ library(rvest)
 library(lubridate)
 library(knitr)
 library(rmarkdown)
+library(reshape2)
 
 #
 #
@@ -192,7 +193,43 @@ View(stats)
 #
 #
 
-# Section 3: Stuff for R Markdown doc ----
+# Section 3: ggplot theme ----
+
+#Global theme options - to easily all plots at once
+font.type <- "Garamond"
+background.color <- "#f1f1f1"
+line.color <- "#d8d8d8"
+title.color <- "#3C3C3C"
+title.size <- 22
+axis.color <- "#535353"
+axis.size <- 14
+
+transparency <- .7 #for alpha
+line.size <- 1.6 #for geom_line()
+point.size <- 3 #for geom_point()
+
+
+theme_bg <-theme(panel.background=element_rect(fill=background.color)) + 
+  theme(plot.background=element_rect(fill=background.color)) +
+  theme(panel.grid.major=element_line(colour=line.color,size=.60)) +
+  theme(panel.grid.minor=element_line(colour=line.color,size=.05)) +
+  theme(axis.ticks=element_blank()) +
+  theme(plot.title=element_text(face="bold",vjust=2, hjust=-.07, colour=title.color,size=title.size)) +
+  theme(axis.text.x=element_text(size=axis.size,colour=axis.color)) +
+  theme(axis.text.y=element_text(size=axis.size,colour=axis.color)) +
+  theme(axis.title.y=element_text(size=axis.size,colour=axis.color,vjust=1.5)) +
+  theme(axis.title.x=element_text(size=axis.size,colour=axis.color,vjust=-.5)) +
+  theme(text=element_text(family=font.type))
+
+#Fonts to plug into font.type variable
+"Lucida Sans"
+"Gil Sans MT"
+"Verdana"
+"Trebuchet MS"
+"Georgia"
+"Garamond"
+
+# Section 4: Stuff for R Markdown doc ----
 
 #table of avg points per game by team for 2005-2015
 team.pts <- stats %>% group_by(team) %>% summarise(mean.points = mean(pts.game)) %>% ungroup() %>% 
@@ -208,20 +245,44 @@ team.pts.2015 <- stats %>% filter(year == "2015") %>% group_by(team) %>%
 
 (pts.vs.pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=pen.yds/games, y=pts.game)) + 
   geom_point(size=3, alpha=.6) + labs(x="\nPenalty Yards per Game", y="Points per Game\n", 
-                                      title = "Points per Game vs. Penalty Yards per Game\n(2015)\n"))
+                                      title = "Points per Game vs. Penalty Yards per Game (2015)\n") + theme_bg)
 
 (pts.vs.pen <- ggplot(subset(stats, year == "2015"), aes(x=pen/games, y=pts.game)) + 
   geom_point(size=3, alpha=.6) + labs(x="\nPenalties per Game", y="Points per Game\n", 
-                                      title = "Points per Game vs. Penalties per Game\n(2015)\n"))
-
+                                      title = "Points per Game vs. Penalties per Game (2015)\n") + theme_bg)
 
 (def.pts.2015 <- ggplot(subset(stats,year == "2015"), aes(x=reorder(team,-pts.game.allowed), y=pts.game.allowed, fill=flag)) +
   geom_bar(stat="identity", alpha=.6) + labs(x="", y="Points per Game Allowed\n", title = "Points Allowed: 2005-2015\n") + 
   guides(fill=FALSE) + scale_fill_manual(values = c("gray37", "darkgreen")) + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + theme_bg)
 
 (pts.vs.defpen <- ggplot(subset(stats, year == "2015"), aes(x=def.pen/games, y=pts.game.allowed)) + 
-  geom_point(size=3, alpha=.6) + labs(x="\n Defensive Penalties per Game", y="Points per GameAllowed\n", title = "Points per Game Allowed vs. Defensive Penalties per Game\n(2015)\n"))
+  geom_point(size=3, alpha=.6) + labs(x="\n Defensive Penalties per Game", y="Points per GameAllowed\n", title = "Points per Game Allowed vs. Defensive Penalties per Game\n(2015)\n") + theme_bg)
 
 (pts.vs.defpenyds <- ggplot(subset(stats, year == "2015"), aes(x=def.pen.yds/games, y=pts.game.allowed)) + 
-  geom_point(size=3, alpha=.6) + labs(x="\n Defensive Penalties per Game", y="Points per GameAllowed\n", title = "Points per Game Allowed vs. Defensive Penalties per Game\n(2015)\n"))
+  geom_point(size=3, alpha=.6) + labs(x="\n Defensive Penalties per Game", y="Points per GameAllowed\n", title = "Points per Game Allowed vs. Defensive Penalties per Game\n(2015)\n") + theme_bg)
+
+(first.downs <- ggplot(stats, aes(x=year, y=firstdowns.game)) + 
+  geom_boxplot(alpha=.6) + labs(x="", y="First Downs per Game", title = "Distribution of 1st Downs") + theme_bg)
+
+(points <- ggplot(stats, aes(x=year, y=pts.game)) + 
+  geom_boxplot(alpha=.6) + labs(x="", y="Points per Game", title = "Distribution of Points") + theme_bg)
+
+(third.downs <- ggplot(subset(stats, year == "2015"), aes(x=reorder(team, -third.rate.allowed), y=third.rate.allowed, fill = flag)) + 
+  geom_bar(stat="identity", alpha=transparency) + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.2)) + theme_bg + 
+  guides(fill=FALSE) + labs(x="", y="Percentage of 3rd-Down Conversionas Allowed by Defense", title="3rd Downs Allowed") +
+  scale_fill_manual(values = c("gray37","darkgreen")))
+
+(def.pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=reorder(team, -def.pen.yds/def.games), y=def.pen.yds/def.games, fill = flag)) + 
+  geom_bar(stat="identity", alpha=transparency) + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.2)) + theme_bg + 
+  guides(fill=FALSE) + labs(x="", y="Yards", title="Defensive Penalty Yards Per Game") +
+  scale_fill_manual(values = c("gray37","darkgreen")))
+
+(off.pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=reorder(team, -pen.yds/def.games), y=pen.yds/def.games, fill = flag)) + 
+  geom_bar(stat="identity", alpha=transparency) + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.2)) + theme_bg + 
+  guides(fill=FALSE) + labs(x="", y="Yards", title="Offensive Penalty Yards Per Game") +
+  scale_fill_manual(values = c("gray37","darkgreen")))
+
+(pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=pen.yds, y=def.pen.yds)) + 
+  geom_point(size=point.size, alpha=transparency) + labs(x="Offensive Penalty Yards", y="Defensive Penalty Yards", title = "Defensive vs Offensive Penalty Yards") + 
+  theme_bg)
