@@ -270,19 +270,24 @@ team.pts.2015 <- stats %>% filter(year == "2015") %>% group_by(team) %>%
 
 (third.downs <- ggplot(subset(stats, year == "2015"), aes(x=reorder(team, -third.rate.allowed), y=third.rate.allowed, fill = flag)) + 
   geom_bar(stat="identity", alpha=transparency) + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.2)) + theme_bg + 
-  guides(fill=FALSE) + labs(x="", y="Percentage of 3rd-Down Conversionas Allowed by Defense", title="3rd Downs Allowed") +
+  guides(fill=FALSE) + labs(x="", y="Percentage of 3rd-Down Conversionas Allowed by Defense", title="3rd Downs Allowed in 2015") +
   scale_fill_manual(values = c("gray37","darkgreen")))
 
 (def.pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=reorder(team, -def.pen.yds/def.games), y=def.pen.yds/def.games, fill = flag)) + 
   geom_bar(stat="identity", alpha=transparency) + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.2)) + theme_bg + 
-  guides(fill=FALSE) + labs(x="", y="Yards", title="Defensive Penalty Yards Per Game") +
+  guides(fill=FALSE) + labs(x="", y="Yards", title="Defensive Penalty Yards Per Game in 2015") +
   scale_fill_manual(values = c("gray37","darkgreen")))
 
 (off.pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=reorder(team, -pen.yds/def.games), y=pen.yds/def.games, fill = flag)) + 
   geom_bar(stat="identity", alpha=transparency) + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.2)) + theme_bg + 
-  guides(fill=FALSE) + labs(x="", y="Yards", title="Offensive Penalty Yards Per Game") +
+  guides(fill=FALSE) + labs(x="", y="Yards", title="Offensive Penalty Yards Per Game in 2015") +
   scale_fill_manual(values = c("gray37","darkgreen")))
 
 (pen.yds <- ggplot(subset(stats, year == "2015"), aes(x=pen.yds, y=def.pen.yds)) + 
   geom_point(size=point.size, alpha=transparency) + labs(x="Offensive Penalty Yards", y="Defensive Penalty Yards", title = "Defensive vs Offensive Penalty Yards") + 
   theme_bg)
+
+(first.downs.allowed <- ggplot(subset(stats, year == "2015"), aes(x=reorder(team, -firstdowns.game.allowed), y=firstdowns.game.allowed, fill = flag)) + 
+  geom_bar(stat="identity", alpha=transparency) + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.2)) + theme_bg + 
+  guides(fill=FALSE) + labs(x="", y="First Downs", title="First Downs Allowed Per Game in 2015") +
+  scale_fill_manual(values = c("gray37","darkgreen")))
