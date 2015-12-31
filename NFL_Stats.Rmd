@@ -36,6 +36,17 @@ print(pts.vs.pen)
 
 
 
+The graph below shows the distribution of first downs across the past 10 seasons. The number of first downs has been pretty normally distributied, with only a few outliers. The 2015 season has the highest median number of first downs per game at `r stats %>% filter(year == "2015") %>% summarise(median = median(firstdowns.game))` first downs per game.
+
+```{r, echo = FALSE, fig.height=7,fig.width=8}
+
+print(first.downs)
+
+```
+
+
+
+
 ###Defense
 
 ```{r, echo = FALSE, warning = FALSE}
@@ -54,15 +65,18 @@ print(def.pts.2015)
 
 ```
 
+```{r, echo=FALSE, include=FALSE, warning=FALSE}
 
-The graph below shows the distribution of first downs across the past 10 seasons. The number of first downs has been pretty normally distributied, with only a few outliers. The 2015 season has the highest median number of first downs per game at `r stats %>% filter(year == "2015") %>% summarise(median = median(firstdowns.game))` first downs per game.
+library(dplyr) 
 
-```{r, echo = FALSE, fig.height=7,fig.width=8}
-
-print(first.downs)
-
+first.dwns.allowed <- stats %>% filter(year == "2015") %>% group_by(team) %>% summarise(first.downs.allowed = sum(firstdowns.game.allowed)) %>% ungroup() %>% arrange(desc(first.downs.allowed)) %>% head(team, n=5)
 ```
 
 
+In terms of most first downs allowed, the `r first.dwns.allowed[1,1]` have the worst ranking, followed by `r first.dwns.allowed[2,1]` and `r first.dwns.allowed[3,1]` with `r first.dwns.allowed[1,2]`, `r first.dwns.allowed[2,2]`, and `r first.dwns.allowed[3,2]` first downs allowed per game, respectively. THe entire league is shwon in the figure below.
+
+```{r, echo=FALSE, fig.width=8, fig.height=7}
+print(first.downs.allowed)
+```
 
 
