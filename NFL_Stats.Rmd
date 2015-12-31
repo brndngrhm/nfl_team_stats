@@ -2,7 +2,7 @@
 title: 'NFL Stats: 2005-2015'
 author: ''
 date: "December 19, 2015"
-output: html_document
+output: word_document
 ---
 
 ###Summary + Description of Data 
@@ -51,6 +51,15 @@ Looking at the defensive side of things, the `r bad.def[1,1]` are the worst defe
 ```{r, echo = FALSE, fig.width=8, fig.height=7}
 
 print(def.pts.2015)
+
+```
+
+
+The graph below shows the distribution of first downs across the past 10 seasons. The number of first downs has been pretty normally distributied, with only a few outliers. The 2015 season has the highest median number of first downs per game at `r stats %>% filter(year == "2015") %>% summarise(median = median(firstdowns.game))` first downs per game.
+
+```{r, echo = FALSE, fig.height=7,fig.width=8}
+
+print(first.downs)
 
 ```
 
