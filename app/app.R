@@ -4,6 +4,10 @@
 library(shiny)
 library(shinyapps)
 
+#install.packages("devtools")
+#install_github( repo = "shinyapps", username="rstudio" )
+
+
 #UI----
 
 # begin each app with template:
