@@ -1,8 +1,0 @@
-name: test_app
-account: brndngrhm
-server: shinyapps.io
-bundleId: 341519
-url: https://brndngrhm.shinyapps.io/test_app
-when: 1451607153.15863
-asMultiple: FALSE
-asStatic: FALSE
