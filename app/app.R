@@ -2,6 +2,7 @@
 
 #packages----
 library(shiny)
+library(shinyapps)
 
 #UI----
 
