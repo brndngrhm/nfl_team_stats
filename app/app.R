@@ -7,6 +7,7 @@ library(shinyapps)
 #install.packages("devtools")
 #install_github( repo = "shinyapps", username="rstudio" )
 
+source("nfl_team_stats.R")
 
 #UI----
 
@@ -21,11 +22,26 @@ library(shinyapps)
 
 
 ui <- fluidPage(
-  sliderInput(inputId = "num",
-              label = "Choose a Number",
-              value = 25, min = 1, max = 100),
-  plotOutput("hist")
+  # Give the page a title
+  titlePanel("NFL Team Stats"),
+  
+  # Generate a row with a sidebar
+  sidebarLayout(      
+    
+    # Define the sidebar with one input
+    sidebarPanel(
+      selectInput("team", "Team:", 
+                  choices=levels(stats$team))
+    ),
+    
+    # Create a spot for the barplot
+    mainPanel(
+      plotOutput("downs.plot")  
+    )
+    
+  )
 )
+
 
 #Server----
 #server function assembles inputs into outputs
@@ -36,12 +52,16 @@ ui <- fluidPage(
 # access  inout values with input$ to build rendered outputs
 
 server <- function(input, output){
-  
-  output$hist <- renderPlot({
-    title <- "100 random normal values"
-    hist(rnorm(input$num), main=title)
-    })
+  output$downs.plot <- renderPlot(
+    
+    # Render a barplot
+    barplot(x = stats$year, y= stats$firstdowns.game[input == "2015"],
+            main="First Downs",
+            ylab="Number of Telephones",
+            xlab="Year")
+  )
 }
+
 
 #Shiny App----
 shinyApp(ui = ui, server = server)
