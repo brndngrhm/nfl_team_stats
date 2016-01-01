@@ -9,6 +9,7 @@ library(lubridate)
 library(knitr)
 library(rmarkdown)
 library(reshape2)
+library(extrafont)
 
 #
 #
